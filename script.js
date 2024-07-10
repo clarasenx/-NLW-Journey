@@ -32,7 +32,11 @@ let activities = [atividade,
 ]
 
 const createActivityItem = (atividade) => {
-  let input = '<input type="checkbox" ';
+  let input = `
+  <input 
+  onchange="concluirAtividade(event)" 
+  value="${atividade.data}"
+  type="checkbox"`;
   
   if (atividade.finalizada) {
     input += "checked";
@@ -125,8 +129,9 @@ const createHoursSelection = () => {
   let hoursAvailable = ''
 
   for(let i = 6; i < 23; i++) {
-    hoursAvailable += `<option value="${i}:00">${i}:00</option>`
-    hoursAvailable += `<option value="${i}:30">${i}:30</option>`
+    const hora = String(i).padStart(2, '0')
+    hoursAvailable += `<option value="${hora}:00">${hora}:00</option>`
+    hoursAvailable += `<option value="${hora}:30">${hora}:30</option>`
   }
 
   document
@@ -135,3 +140,16 @@ const createHoursSelection = () => {
 }
 
 createHoursSelection();
+
+const concluirAtividade = (event) => {
+  const input = event.target
+  const dataInput = input.value
+
+  const atividade = activities.find((atividade) => {
+    return atividade.data == dataInput
+  })
+  if(!atividade) {
+    return 
+  }
+  atividade.finalizada = !atividade.finalizada
+}
