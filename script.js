@@ -51,7 +51,37 @@ const updateActivityList = () => {
   for (let atividade of activities) {
     section.innerHTML += createActivityItem(atividade);
   }
-
 }
 
 updateActivityList();
+
+const saveActivity = (event) => {
+  event.preventDefault()
+}
+
+const createDaysSelection = () => {
+  const dias = [
+    '2024-02-28',
+    '2024-02-29',
+    '2024-03-01',
+    '2024-03-02',
+    '2024-03-03',
+  ]
+
+  let diasSelecao = ''
+
+  for(let dia of dias) {
+    const formatar = formatDate(dia)
+    const date = `
+    ${formatar.dia.numerico} de ${formatar.mes}
+    `
+    diasSelecao += `
+      <option value="${dia}">${date}</option>
+    `
+  }
+  document
+  .querySelector('select[name="dia"')
+  .innerHTML = diasSelecao
+}
+
+createDaysSelection();
