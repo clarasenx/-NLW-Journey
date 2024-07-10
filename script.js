@@ -13,23 +13,34 @@ const formatDate = (data) => {
 }
 
 const atividade = {
-  nome: "Lunch Time",
-  data: new Date("2024-07-09 12:00"),
+  nome: "Almoço",
+  data: new Date("2024-07-08 10:00"),
   finalizada: true,
-};
+}
 
-let activities = [atividade];
+let activities = [atividade,
+  {
+    nome: 'Academia em grupo',
+    data: new Date("2024-07-09 12:00"),
+    finalizada: false
+  },
+  {
+    nome: 'Gamming session',
+    data: new Date("2024-07-09 16:00"),
+    finalizada: true
+  },
+]
 
 const createActivityItem = (atividade) => {
   let input = '<input type="checkbox" ';
   
   if (atividade.finalizada) {
     input += "checked";
-  }
+  };
   
-  input += ">";
+  input += ">"
 
-  const dateFormated = formatDate(atividade.data);
+  const dateFormated = formatDate(atividade.data)
   
   return `
   <div>
@@ -37,14 +48,15 @@ const createActivityItem = (atividade) => {
   <span>${atividade.nome}</span>
   <span>${dateFormated.dia.semana.longo}, dia ${dateFormated.dia.numerico} de ${dateFormated.mes} às ${dateFormated.hora}</span>
   </div>
-  `;
-};
+  `
+}
 
 const updateActivityList = () => {
   const section = document.querySelector("section");
+  section.innerHTML = '';
 
   if(activities.length == 0) {
-    section.innerHTML = '<p>Nenhuma atividade cadastrada.</p>'
+    section.innerHTML = '<p>Nenhuma atividade cadastrada.</p>';
     return
   }
 
@@ -57,6 +69,29 @@ updateActivityList();
 
 const saveActivity = (event) => {
   event.preventDefault()
+  const dadosForm = new FormData(event.target)
+
+  const nome = dadosForm.get('atividade')
+  const dia = dadosForm.get('dia')
+  const hora = dadosForm.get('hora')
+  const data = `${dia} ${hora}`
+
+  const novaAtividade = {
+    nome,
+    data,
+    finalizada: false
+  }
+
+  const atividadeExiste = activities.find((atividade) => {
+    return atividade.data == novaAtividade.data
+  })
+
+  if (atividadeExiste) {
+    return alert('Dia/Hora indisponível')
+  }
+
+  activities = [novaAtividade, ...activities]
+  updateActivityList();
 }
 
 const createDaysSelection = () => {
@@ -85,3 +120,18 @@ const createDaysSelection = () => {
 }
 
 createDaysSelection();
+
+const createHoursSelection = () => {
+  let hoursAvailable = ''
+
+  for(let i = 6; i < 23; i++) {
+    hoursAvailable += `<option value="${i}:00">${i}:00</option>`
+    hoursAvailable += `<option value="${i}:30">${i}:30</option>`
+  }
+
+  document
+  .querySelector('select[name="hora"')
+  .innerHTML = hoursAvailable
+}
+
+createHoursSelection();
