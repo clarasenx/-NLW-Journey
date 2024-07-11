@@ -1,4 +1,69 @@
-html {
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --lime-color: #BEF264;
+  --lime-button-color: #AFF445;
+  --lime-dark-color: #1A2E05;
+  --bg-color: #09090B;
+  --second-bg-color: #A1A1AA;
+  --white-dark-color: #F4F4F5;
+  --white-color: #FAFAFA;
+  --border-color: #27272A;
+}
+
+html, input, select, button, option {
   background-color: #09090b;
   color: #fafafa;
+  font-family: 'Inter', sans-serif;
+}
+
+/* mobile code */
+#app {
+  padding: 40px 20px;
+  max-width: 320px;
+  margin: auto;
+}
+
+input, select, button {
+  width: 100%;
+}
+
+input, select {
+  all: unset;
+}
+
+.fields {
+  display: grid;
+  gap: 8px;
+}
+
+.fieldWrapper {
+  padding: 18px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fieldWrapper:focus-within {
+ outline: 2px solid var(--lime-color); 
+}
+
+button {
+  margin-top: 12px;
+  border: none;
+  padding: 12px 20px;
+  background-color: var(--lime-button-color);
+  border-radius: 8px;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.02em;
+  color: var(--lime-dark-color);
 }
